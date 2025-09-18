@@ -1,5 +1,5 @@
 CFLAGS = -Wall -Wextra -Werror -g
-MLXFLAGS = -lmlx -lXext -lX11 -L/home/oobbad/Documents/cub3d/minilibx-linux
+LDFLAGS = -lm -lmlx -lXext -lX11 -L/home/oobbad/Documents/cub3d/minilibx-linux
 CC = cc
 RM = rm -f
 NAME = cube3D
@@ -8,7 +8,7 @@ OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(MLXFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 clean:
