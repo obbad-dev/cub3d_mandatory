@@ -1,5 +1,5 @@
 CFLAGS = -Wall -Wextra -Werror -g
-LDFLAGS = -lm -lmlx -lXext -lX11 -L/home/oobbad/Documents/cub3d/minilibx-linux
+LDFLAGS = -lm -lmlx -lXext -lX11 -Lminilibx-linux
 CC = cc
 RM = rm -f
 NAME = cube3D
