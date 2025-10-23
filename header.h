@@ -32,6 +32,10 @@ typedef struct s_data
 
 } t_data;
 
-
+int 	mov_player(int key, t_data *data);
+void 	render(t_data *data);
+void    line(t_data *data,int x0, int y0, int x1, int y1, int color);
+void 	draw_rectangle(t_data *data, int x, int y, int tile_size,int color);
+void 	put_color(t_data *data, int x, int y, int color);
 
 #endif
