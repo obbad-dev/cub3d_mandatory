@@ -14,6 +14,16 @@ int arr[MAP_NUM_ROWS][MAP_NUM_COLS] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
+bool check_wall(double x, double y)
+{
+    int map_x = (int)(x / TILE_SIZE);
+    int map_y = (int)(y / TILE_SIZE);
+
+    if (map_x < 0 || map_x >= MAP_NUM_COLS || map_y < 0 || map_y >= MAP_NUM_ROWS)
+        return true;
+    return (arr[map_y][map_x] == 1);
+}
+
 void render(t_data *data)
 {
 	int i;
@@ -33,9 +43,11 @@ void render(t_data *data)
 		}
 		i++;
 	}
-	draw_rectangle(data, data->px, data->py, 20,0xff0000);
-	int line_end_x = data->px + (int)(cos(data->rotation_angle) * 30);
-    int line_end_y = data->py + (int)(sin(data->rotation_angle) * 30);
-	line(data, data->px + 10, data->py + 10, line_end_x + 10, line_end_y + 10, 0x0000ff);
+
+	draw_rectangle(data, data->px - 10, data->py - 10, 20,0xff0000);
+	int end_linex = data->px + cos(data->rotation_angle) * 30;
+	int end_liney = data->py + sin(data->rotation_angle) * 30;
+	draw_line(data, data->px, data->py, end_linex, end_liney, 0xff0000);
+	cast(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img_p, 0, 0);
 }

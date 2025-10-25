@@ -8,7 +8,7 @@ void put_color(t_data *data, int x, int y, int color)
 	row[x] = color;
 }
 
-void    line(t_data *data,int x0, int y0, int x1, int y1, int color)
+void    draw_line(t_data *data,int x0, int y0, int x1, int y1, int color)
 {
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
@@ -35,7 +35,8 @@ void    line(t_data *data,int x0, int y0, int x1, int y1, int color)
     }
 }
 
-void draw_rectangle(t_data *data, int x, int y, int tile_size,int color){
+void draw_rectangle(t_data *data, int x, int y, int tile_size,int color)
+{
 	int i;
 	int j;
 

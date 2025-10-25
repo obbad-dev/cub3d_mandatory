@@ -81,7 +81,7 @@ void rect(int x, int y, int color, int tile_size){
 	}
 }
 
-void    line(int x0, int y0, int x1, int y1, int color)
+void    draw_line(int x0, int y0, int x1, int y1, int color)
 {
     int dx = abs(x1 - x0);
     int dy = abs(y1 - y0);
@@ -115,7 +115,7 @@ void castRays(int x, int y){
 
 		int line_end_x = x + (int)(cos(rayAngle) * 60);
     	int line_end_y = y + (int)(sin(rayAngle) * 60);
-		line(x, y, line_end_x, line_end_y, 0xff0000);
+		draw_line(x, y, line_end_x, line_end_y, 0xff0000);
 		rayAngle += FOV_ANGLE / NUM_RAYS;
 	}
 }
@@ -135,7 +135,7 @@ void render(t_info *info)
 	rect(x_p - 10, y_p - 10, 0xff0000, 20);
 	int line_end_x = x_p + (int)(cos(rotationAngle) * 30);
     int line_end_y = y_p + (int)(sin(rotationAngle) * 30);
-    line( x_p, y_p, line_end_x, line_end_y, 0xff0000);
+    draw_line( x_p, y_p, line_end_x, line_end_y, 0xff0000);
 	castRays(x_p, y_p);
 	mlx_put_image_to_window(info->mlx, info->win, img_p, 0, 0);
 }

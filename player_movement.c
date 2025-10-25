@@ -17,8 +17,15 @@ int mov_player(int key, t_data *data)
 		exit(1);
 	data->rotation_angle += turn * 0.2;   
     int moveStep = walk * 5; 
-	data->px += cos(data->rotation_angle) * moveStep; 
-	data->py += sin(data->rotation_angle) * moveStep;
+	double x = 0, y = 0;
+
+	x = data->px + cos(data->rotation_angle) * moveStep;
+	y = data->py + sin(data->rotation_angle) * moveStep;
+
+	if (!check_wall(x, y)){
+		data->px = x; 
+		data->py = y;
+	}
 	render(data);
 	return key;
 }
