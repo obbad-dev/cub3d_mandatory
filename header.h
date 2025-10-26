@@ -17,6 +17,9 @@
 #define Y_PLAYER (WIN_HEIGHT/2)
 #define NUM_RAYS 1080
 #define TWO_PI 6.28318530
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 typedef struct s_data
 {
