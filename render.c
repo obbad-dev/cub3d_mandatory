@@ -16,8 +16,8 @@ int arr[MAP_NUM_ROWS][MAP_NUM_COLS] = {
 
 bool check_wall(double x, double y)
 {
-    int map_x = (int)(x / TILE_SIZE);
-    int map_y = (int)(y / TILE_SIZE);
+    int map_x = floor(x / TILE_SIZE);
+    int map_y = floor(y / TILE_SIZE);
 
     if (map_x < 0 || map_x >= MAP_NUM_COLS || map_y < 0 || map_y >= MAP_NUM_ROWS)
         return true;

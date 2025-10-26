@@ -15,6 +15,7 @@ int mov_player(int key, t_data *data)
 		turn = 1;
 	else if (key == 65307)
 		exit(1);
+		
 	data->rotation_angle += turn * 0.2;   
     int moveStep = walk * 5; 
 	double x = 0, y = 0;

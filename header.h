@@ -25,10 +25,6 @@ typedef struct s_data
 	double 	px;
 	double 	py;
 	double  rotation_angle;
-    double  dirx;
-    double  diry;
-    double  planex;   
-    double  planey;
 	void 	*img_p;
 	char 	*img_s;
 	int 	bpp;
@@ -44,6 +40,8 @@ void 	draw_rectangle(t_data *data, int x, int y, int tile_size,int color);
 void 	put_color(t_data *data, int x, int y, int color);
 void 	cast(t_data *data);
 bool 	check_wall(double x, double y);
-void 	DDA(t_data *data, float rayAngle);
+void 	DDA(t_data *data, double rayAngle);
+
+extern int arr[MAP_NUM_ROWS][MAP_NUM_COLS];
 
 #endif
