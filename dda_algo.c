@@ -47,7 +47,6 @@ void DDA(t_data *data, double rayAngle)
 	bool facing_left ;
 
 	rayAngle = handle_angle(rayAngle);
-
 	facing_player(&facing_up, &facing_down, &facing_left, &facing_right, rayAngle);
 
 //=================================| Horizontal |======================================
@@ -62,8 +61,8 @@ void DDA(t_data *data, double rayAngle)
 	if (facing_up)
 		y_step *= -1;
 
-	x_step = y_step / tan(rayAngle);
-	if ((facing_left && x_step > 0) || (facing_right && x_step < 0))
+	x_step = fabs(TILE_SIZE / tan(rayAngle));
+	if (facing_left)
 		x_step *= -1;
 
 	if (facing_up)
@@ -93,8 +92,8 @@ void DDA(t_data *data, double rayAngle)
 	if (facing_left)
 		x_step *= -1;
 
-	y_step = tan(rayAngle) * x_step;
-	if ((facing_down && y_step < 0) || (facing_up && y_step > 0))
+	y_step = fabs(tan(rayAngle) * TILE_SIZE);
+	if (facing_up)
 		y_step *= -1;
 
 	if (facing_left)
