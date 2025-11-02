@@ -40,6 +40,24 @@ void draw_line(t_data *data, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
+void drawFilledRectangle(t_data *data, int x, int y, int width, int height, int color)
+{
+	int i;
+	int j;
+
+	i = y;
+	while (i < y + height)
+	{
+		j = x;
+		while (j < x + width)
+		{
+			put_color(data, j, i, color);
+			j++;
+		}
+		i++;
+	}
+}
+
 void draw_rectangle(t_data *data, int x, int y, int tile_size,int color)
 {
 	int i;

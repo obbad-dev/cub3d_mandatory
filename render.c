@@ -30,21 +30,22 @@ void render(t_data *data)
 	int j;
 
 	i = 0; 
+	cast(data);
 	while (i < MAP_NUM_ROWS){
 		j = 0;
 		while (j < MAP_NUM_COLS)
 		{
 			if (arr[i][j] == 1){
-				draw_rectangle(data, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, 0x000000);
+				draw_rectangle(data, MAP_SCAL * (j * TILE_SIZE), MAP_SCAL * (i * TILE_SIZE), TILE_SIZE, 0x000000);
 			}
 			else if (arr[i][j] == 0)
-				draw_rectangle(data, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, 0xffffff);
+				draw_rectangle(data, MAP_SCAL * (j * TILE_SIZE), MAP_SCAL * (i * TILE_SIZE), TILE_SIZE, 0xffffff);
 			j++;
 		}
 		i++;
 	}
 
-	draw_rectangle(data, data->px - 10, data->py - 10, 20,0xff0000);
-	cast(data);
+	draw_rectangle(data, MAP_SCAL * (data->px - 10), MAP_SCAL * (data->py - 10), MAP_SCAL * 20, 0xff0000);
+	
 	mlx_put_image_to_window(data->mlx, data->win, data->img_p, 0, 0);
 }
