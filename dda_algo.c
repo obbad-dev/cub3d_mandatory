@@ -15,6 +15,7 @@ double handle_angle(double angle)
 		angle += 2 * M_PI;
 	return angle;
 }
+
 void facing_player(bool *facing_up, bool *facing_down, bool *facing_left, bool *facing_right, double rayAngle)
 {
 	if (rayAngle > M_PI && rayAngle < 2 * M_PI)
@@ -23,7 +24,6 @@ void facing_player(bool *facing_up, bool *facing_down, bool *facing_left, bool *
 		*facing_up = false;
 	*facing_down = !*facing_up;
 
-//============================================================================
 	if (rayAngle < (M_PI / 2) || rayAngle > (3 * M_PI / 2))
 		*facing_right = true;
 	else
@@ -116,19 +116,19 @@ void DDA(t_data *data, double rayAngle)
 	double dist_hor = distance(data->px, data->py, end_hor_x, end_hor_y);
 	double dist_ver = distance(data->px, data->py, end_ver_x, end_ver_y);
 
-	int end_linex;
-	int end_liney;
 
 	if (dist_hor < dist_ver)
 	{
-		end_linex = end_hor_x;
-		end_liney = end_hor_y;
+		data->end_x = end_hor_x;
+		data->end_y = end_hor_y;
+		data->distance = dist_hor;
 	}
 	else
 	{
-		end_linex = end_ver_x;
-		end_liney = end_ver_y;
-	}
+		data->end_x = end_ver_x;
+		data->end_y = end_ver_y;
+		data->distance = dist_ver;
 
-	draw_line(data, data->px, data->py, end_linex, end_liney, 0x00ff00);
+	}
+	draw_line(data, data->px, data->py, data->end_x, data->end_y, 0x00ff00);
 }

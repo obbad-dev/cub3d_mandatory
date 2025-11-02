@@ -6,7 +6,7 @@ NAME = cube3D
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
 
-all: $(NAME)
+all: $(NAME) clean
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 %.o: %.c

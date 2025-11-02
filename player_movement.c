@@ -17,7 +17,7 @@ int mov_player(int key, t_data *data)
 		exit(1);
 		
 	data->rotation_angle += turn * 0.2;   
-    int moveStep = walk * 5; 
+    int moveStep = walk * 10; 
 	double x = 0, y = 0;
 
 	x = data->px + cos(data->rotation_angle) * moveStep;

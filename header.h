@@ -10,7 +10,7 @@
 
 #define MAP_NUM_ROWS 11
 #define MAP_NUM_COLS 15
-#define TILE_SIZE 64
+#define TILE_SIZE 128
 #define WIN_WIDTH (MAP_NUM_COLS*TILE_SIZE)
 #define WIN_HEIGHT (MAP_NUM_ROWS*TILE_SIZE)
 #define X_PLAYER (WIN_WIDTH/2)
@@ -33,8 +33,13 @@ typedef struct s_data
 	int 	bpp;
 	int 	size_line;
 	int 	endian;
+	double fov;
+	double distance;
+	int end_x;
+	int end_y;
 
 } t_data;
+
 
 int 	mov_player(int key, t_data *data);
 void 	render(t_data *data);

@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 void cast_ray(t_data *data, double rayAngle)
 {
   
@@ -23,14 +22,14 @@ void cast_ray(t_data *data, double rayAngle)
 
 void cast(t_data *data)
 {
-    double fov = 60 * (M_PI / 180);
-    double rayAngle = data->rotation_angle - (fov / 2);
+    data->fov = 60 * (M_PI / 180);
+    double rayAngle = data->rotation_angle - (data->fov / 2);
 
     int i = 0;
     while (i < NUM_RAYS)
     {
         DDA(data, rayAngle);
-        rayAngle += fov / NUM_RAYS;
+        rayAngle += data->fov / NUM_RAYS;
         i++;
     }
 }
