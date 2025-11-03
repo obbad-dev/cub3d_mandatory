@@ -10,15 +10,23 @@
 
 #define MAP_NUM_ROWS 11
 #define MAP_NUM_COLS 15
-#define TILE_SIZE 64
-#define WIN_WIDTH (MAP_NUM_COLS*TILE_SIZE)
-#define WIN_HEIGHT (MAP_NUM_ROWS*TILE_SIZE)
-#define NUM_RAYS 1080
+#define TILE_SIZE 32
+#define WIN_WIDTH 1920
+#define WIN_HEIGHT 1080
+#define NUM_RAYS 1920
 #define MAP_SCAL 0.2
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+typedef struct s_cast
+{
+	int end_x;
+	int end_y;
+	double distance;
+	double ray_angle;
+
+}t_cast;
 
 typedef struct s_data
 {
@@ -26,17 +34,17 @@ typedef struct s_data
 	void 	*win;
 	double 	px;
 	double 	py;
-	double  rotation_angle;
+	double  angle_direction;
+	double fov;
+	int 	fps;
+	double delta_time;
 	void 	*img_p;
 	char 	*img_s;
 	int 	bpp;
 	int 	size_line;
 	int 	endian;
-	double fov;
-	double distance;
-	int end_x;
-	int end_y;
-	int ray_id;
+	int 	ray_id;
+	t_cast cast[NUM_RAYS];
 
 } t_data;
 
@@ -49,8 +57,10 @@ void drawFilledRectangle(t_data *data, int x, int y, int width, int height, int 
 void 	put_color(t_data *data, int x, int y, int color);
 void 	cast(t_data *data);
 bool 	check_wall(double x, double y);
-void 	DDA(t_data *data, double rayAngle);
-
+double handle_angle(double angle);
+void 	DDA(t_data *data, double rayAngle, int i);
+void render3d(t_data *data, int i);
+int check_wall_number(double x, double y);
 extern int arr[MAP_NUM_ROWS][MAP_NUM_COLS];
 
 #endif

@@ -8,14 +8,6 @@ double distance(double x1, double y1, double x2, double y2)
 	return res;
 }
 
-double handle_angle(double angle)
-{
-	angle = fmod(angle, 2 * M_PI);
-	if (angle < 0)
-		angle += 2 * M_PI;
-	return angle;
-}
-
 void facing_player(bool *facing_up, bool *facing_down, bool *facing_left, bool *facing_right, double rayAngle)
 {
 	if (rayAngle > M_PI && rayAngle < 2 * M_PI)
@@ -31,63 +23,7 @@ void facing_player(bool *facing_up, bool *facing_down, bool *facing_left, bool *
 	*facing_left = !*facing_right;
 }
 
-void render3d(t_data *data, double rayAngle)
-{
-	double distance_projection_plan;
-	double wall_height;
-	int wall_strip_height;
-	int wall_top;
-	int wall_bottom;
-	int y;
-
-	// Fix fisheye effect - use perpendicular distance
-	data->distance = data->distance * cos(rayAngle - data->rotation_angle);
-	
-	// Prevent division by zero
-	if (data->distance <= 0.1)
-		data->distance = 0.1;
-
-	// Calculate projection and wall height
-	distance_projection_plan = (WIN_WIDTH / 2) / tan(data->fov / 2);
-	wall_height = (TILE_SIZE / data->distance) * distance_projection_plan;
-	wall_strip_height = (int)floor(wall_height);
-
-	// Calculate top and bottom positions
-	wall_top = (WIN_HEIGHT / 2) - (wall_strip_height / 2);
-	wall_bottom = (WIN_HEIGHT / 2) + (wall_strip_height / 2);
-
-	// Clamp to window bounds
-	if (wall_top < 0)
-		wall_top = 0;
-	if (wall_bottom > WIN_HEIGHT)
-		wall_bottom = WIN_HEIGHT;
-
-	Draw ceiling (sky)
-	y = 0;
-	while (y < wall_top)
-	{
-		put_color(data, data->ray_id, y, 0x87CEEB); // Sky blue
-		y++;
-	}
-
-	// Draw wall
-	y = wall_top;
-	while (y < wall_bottom)
-	{
-		put_color(data, data->ray_id, y, 0x808080); // Gray wall
-		y++;
-	}
-
-	// Draw floor
-	y = wall_bottom;
-	while (y < WIN_HEIGHT)
-	{
-		put_color(data, data->ray_id, y, 0x228B22); // Green floor
-		y++;
-	}
-}
-
-void DDA(t_data *data, double rayAngle)
+void DDA(t_data *data, double rayAngle, int i)
 {
 	double x_inter;
 	double y_inter;
@@ -175,17 +111,18 @@ void DDA(t_data *data, double rayAngle)
 
 	if (dist_hor < dist_ver)
 	{
-		data->end_x = end_hor_x;
-		data->end_y = end_hor_y;
-		data->distance = dist_hor;
+		data->cast[i].end_x = end_hor_x;
+		data->cast[i].end_y = end_hor_y;
+		data->cast[i].distance = dist_hor;
 	}
 	else
 	{
-		data->end_x = end_ver_x;
-		data->end_y = end_ver_y;
-		data->distance = dist_ver;
+		data->cast[i].end_x = end_ver_x;
+		data->cast[i].end_y = end_ver_y;
+		data->cast[i].distance = dist_ver;
 
 	}
-	draw_line(data, MAP_SCAL * data->px, MAP_SCAL * data->py, MAP_SCAL * data->end_x, MAP_SCAL * data->end_y, 0x00ff00);
-	render3d(data, rayAngle);
+	render3d(data, i);
+	// draw_line(data, MAP_SCAL * data->px, MAP_SCAL * data->py, MAP_SCAL * data->end_x, MAP_SCAL * data->end_y, 0x00ff00);
 }
+
