@@ -2,6 +2,7 @@
 
 int mov_player(int key, t_data *data)
 {
+
 	int walk = 0;
 	int turn = 0;
 

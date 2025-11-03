@@ -1,4 +1,16 @@
 #include "header.h"
+#include "header.h"
+
+int game_loop(t_data *data)
+{
+    // Update FPS counter
+    update_fps(data);
+    
+    // Re-render the scene
+    render(data);
+    
+    return (0);
+}
 
 int main()
 {
@@ -11,7 +23,8 @@ int main()
 	data.px = TILE_SIZE * MAP_NUM_COLS / 2;
 	data.py = TILE_SIZE * MAP_NUM_ROWS / 2;
 	data.angle_direction =  M_PI / 2;
-	render(&data);
+	init_fps(&data);
+	mlx_loop_hook(data.mlx, game_loop, &data);
 	mlx_hook(data.win,2, 1L<<0, mov_player, &data);
     mlx_loop(data.mlx); 
     return (0);

@@ -58,6 +58,7 @@ void render(t_data *data)
 	int j;
 	
 	i = 0;
+	update_fps(data);
 	cast(data);
 	while (i < MAP_NUM_ROWS){
 		j = 0;
