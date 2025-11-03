@@ -42,22 +42,10 @@ typedef struct s_data
 	int 	size_line;
 	int 	endian;
 	int 	ray_id;
-
-	double      last_frame_time;    // Time of last frame
-    double      current_frame_time; // Current frame time
-    double      delta_time;         // Time between frames
-    int         fps;                // Calculated FPS
-    int         frame_count;        // Frame counter
-    double      fps_update_timer;
-
 	t_cast cast[NUM_RAYS];
 
 } t_data;
 
-
-void update_fps(t_data *data);
-void init_fps(t_data *data);
-double get_time(void);
 
 int 	mov_player(int key, t_data *data);
 void 	render(t_data *data);

@@ -1,16 +1,4 @@
 #include "header.h"
-#include "header.h"
-
-int game_loop(t_data *data)
-{
-    // Update FPS counter
-    update_fps(data);
-    
-    // Re-render the scene
-    render(data);
-    
-    return (0);
-}
 
 int main()
 {
@@ -23,12 +11,8 @@ int main()
 	data.px = TILE_SIZE * MAP_NUM_COLS / 2;
 	data.py = TILE_SIZE * MAP_NUM_ROWS / 2;
 	data.angle_direction =  M_PI / 2;
-	init_fps(&data);
-	mlx_loop_hook(data.mlx, game_loop, &data);
+	render(&data);
 	mlx_hook(data.win,2, 1L<<0, mov_player, &data);
     mlx_loop(data.mlx); 
     return (0);
 }
-
-// distance_projection_plan = pow((WIN_WIDTH / 2), 2) - pow(data->distance, 2);
-// 	distance_projection_plan = sqrt(distance_projection_plan);
