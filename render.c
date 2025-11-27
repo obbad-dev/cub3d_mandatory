@@ -1,43 +1,17 @@
 #include "header.h"
 
-int arr[MAP_NUM_ROWS][MAP_NUM_COLS] = {
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-	{1, 0, 0, 0, 0, 1, 0, 0, 4, 0, 0, 0, 1, 0, 1},
-	{1, 1, 1, 1, 0, 0, 4, 0, 0, 0, 0, 0, 1, 0, 1},
-	{1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 1},
-	{1, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1, 4, 0, 0, 1, 1, 1, 1, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
 
-bool check_wall(double x, double y)
+
+bool check_wall(char **map,double x, double y, int rows)
 {
     int map_x = floor(x / TILE_SIZE);
     int map_y = floor(y / TILE_SIZE);
 
-    if (map_x < 0 || map_x >= MAP_NUM_COLS || map_y < 0 || map_y >= MAP_NUM_ROWS)
+    if (map_x < 0 || map_y < 0 || map_y >= rows || map_x >= (int)ft_strlen(map[map_y]))
         return true;
-    return (arr[map_y][map_x] != 0);
+    return (map[map_y][map_x] != '0');
 }
 
-int check_wall_number(double x, double y)
-{
-    int map_x = floor(x / TILE_SIZE);
-    int map_y = floor(y / TILE_SIZE);
-
-    if (map_x < 0 || map_x >= MAP_NUM_COLS || map_y < 0 || map_y >= MAP_NUM_ROWS)
-        return 1;
-	else if (arr[map_y][map_x] == 4)
-		return 4;
-	else if (arr[map_y][map_x] == 1)
-		return 1;
-	else
-    	return 0;
-}
 
 void cast_rays(t_data *data)
 {
@@ -59,14 +33,17 @@ void render(t_data *data)
 	
 	i = 0;
 	cast(data);
-	while (i < MAP_NUM_ROWS){
+	while (data->map[i])
+	{
 		j = 0;
-		while (j < MAP_NUM_COLS)
+		while (data->map[i][j])
 		{
-			if (arr[i][j] == 0){
+			if (data->map[i][j] == '0'){
 				draw_rectangle(data, MAP_SCAL * (j * TILE_SIZE), MAP_SCAL * (i * TILE_SIZE), MAP_SCAL* TILE_SIZE + 1, 0xffffff);
 			}
-			else
+			else if (ft_isspace(data->map[i][j]))
+				draw_rectangle(data, MAP_SCAL * (j * TILE_SIZE), MAP_SCAL * (i * TILE_SIZE),MAP_SCAL* TILE_SIZE + 1, 0x0000ff);
+			else 
 				draw_rectangle(data, MAP_SCAL * (j * TILE_SIZE), MAP_SCAL * (i * TILE_SIZE),MAP_SCAL* TILE_SIZE + 1, 0x000000);
 			j++;
 		}

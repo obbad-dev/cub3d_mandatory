@@ -23,6 +23,7 @@ void facing_player(bool *facing_up, bool *facing_down, bool *facing_left, bool *
 	*facing_left = !*facing_right;
 }
 
+
 void DDA(t_data *data, double rayAngle, int i)
 {
 	double x_inter;
@@ -62,7 +63,7 @@ void DDA(t_data *data, double rayAngle, int i)
 
 	while (1)
 	{
-		if (check_wall(x_inter, y_inter))
+		if (check_wall(data->map,x_inter, y_inter, data->rows))
 		{
 			end_hor_x = x_inter;
 			end_hor_y = y_inter;
@@ -93,7 +94,7 @@ void DDA(t_data *data, double rayAngle, int i)
 
 	while (1)
 	{
-		if (check_wall(x_inter, y_inter))
+		if (check_wall(data->map,x_inter, y_inter, data->rows))
 		{
 			end_ver_x = x_inter;
 			end_ver_y = y_inter;
@@ -107,13 +108,14 @@ void DDA(t_data *data, double rayAngle, int i)
 
 	double dist_hor = distance(data->px, data->py, end_hor_x, end_hor_y);
 	double dist_ver = distance(data->px, data->py, end_ver_x, end_ver_y);
-
+	data->cast[i].is_hor = false;
 
 	if (dist_hor < dist_ver)
 	{
 		data->cast[i].end_x = end_hor_x;
 		data->cast[i].end_y = end_hor_y;
 		data->cast[i].distance = dist_hor;
+		data->cast[i].is_hor = true;
 	}
 	else
 	{
@@ -123,6 +125,5 @@ void DDA(t_data *data, double rayAngle, int i)
 
 	}
 	render3d(data, i);
-	// draw_line(data, MAP_SCAL * data->px, MAP_SCAL * data->py, MAP_SCAL * data->end_x, MAP_SCAL * data->end_y, 0x00ff00);
 }
 

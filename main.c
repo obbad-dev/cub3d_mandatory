@@ -1,18 +1,47 @@
 #include "header.h"
 
-int main()
+void init_textures(t_textures *tex, t_data *data)
 {
-	t_data data;
+	tex[0].id = NULL;
+	tex[0].path = NULL;
+	tex[1].id = NULL;
+	tex[1].path = NULL;
+	tex[2].id = NULL;
+	tex[2].path = NULL;
+	tex[3].id = NULL;
+	tex[3].path = NULL;
+	data->no = NULL;
+	data->we = NULL;
+	data->so = NULL;
+	data->ea = NULL;
+}
 
-    data.mlx = mlx_init();
-    data.win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "My First MLX Window");
-	data.img_p = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	data.img_s = mlx_get_data_addr(data.img_p, &data.bpp, &data.size_line, &data.endian);
-	data.px = TILE_SIZE * MAP_NUM_COLS / 2;
-	data.py = TILE_SIZE * MAP_NUM_ROWS / 2;
-	data.angle_direction =  M_PI / 2;
-	render(&data);
-	mlx_hook(data.win,2, 1L<<0, mov_player, &data);
-    mlx_loop(data.mlx); 
+
+
+int main(int ac, char *av[])
+{
+	int size;
+	t_data data;
+	char **content ;
+
+	if (ac != 2)
+		return 1;
+	data.color_c = -1;
+	data.color_f = -1;
+	content = fill_content(av[1], &size);
+	init_textures(data.tex, &data);
+	extract_textures_colors(content, &data);
+	parse_map(content, &data);
+	draw_window(&data);
     return (0);
 }
+
+	// mlx_destroy_image(data.mlx, data.no);
+	// mlx_destroy_image(data.mlx, data.so);
+	// mlx_destroy_image(data.mlx, data.we);
+	// mlx_destroy_image(data.mlx, data.ea);
+	// free(data.mlx);
+
+// t_data data;
+
+ 

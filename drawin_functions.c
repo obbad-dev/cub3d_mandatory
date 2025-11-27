@@ -5,6 +5,7 @@ void put_color(t_data *data, int x, int y, int color)
 	int *row;
 
 	row = (int *)(data->img_s + y * data->size_line);
+
 	row[x] = color;
 }
 
