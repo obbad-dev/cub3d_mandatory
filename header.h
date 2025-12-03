@@ -33,7 +33,16 @@ typedef struct s_cast
 	bool facing_down;
 	bool facing_right;
 	bool facing_left ;
-
+	double dist_proj_plan;
+	double dist_perpo;
+	int tall_wall;
+	int true_begin_wall;
+	int wall_begin;
+	int wall_end;
+	int y;
+	int tex_x;
+	int tex_y;
+	void *img;
 }t_cast;
 
 typedef struct s_textures
@@ -73,23 +82,22 @@ typedef struct s_data
 	t_cast cast[NUM_RAYS];
 
 } t_data;
-void draw_window(t_data *data);
-int how_line_in_file(char *);
+
+void 	draw_window(t_data *data);
+int 	how_line_in_file(char *);
 int 	mov_player(int key, t_data *data);
-int	render(t_data *data);
-void    draw_line(t_data *data,int x0, int y0, int x1, int y1, int color);
-void 	draw_rectangle(t_data *data, int x, int y, int tile_size,int color);
-void drawFilledRectangle(t_data *data, int x, int y, int width, int height, int color);
+int		put_img_to_window(t_data *data);
+int 	get_pixel_color(void *texture_img, int x, int y);
 void 	put_color(t_data *data, int x, int y, int color);
-void 	cast(t_data *data);
+void 	dda_and_rendring(t_data *data);
 bool 	check_wall(char **map, double x, double y, int rows);
-double handle_angle(double angle);
-void 	dda_algo(t_data *data,int i);
-void	horizonlat_inter(t_data *data, int i, double *end_hor_x, double *end_hor_y);
-void	vertical_inter(t_data *data, int i, double *end_ver_x, double *end_ver_y);
-void render3d(t_data *data, t_cast *cast, int i);
+double 	handle_angle(double angle);
+void 	dda_algo(t_data *data, t_cast *cast);
+void	horizonlat_inter(t_data *data, t_cast *cast, double *end_hor_x, double *end_hor_y);
+void	vertical_inter(t_data *data, t_cast *cast, double *end_ver_x, double *end_ver_y);
+void 	render3d(t_data *data, t_cast *cast);
 char	**ft_split(const char *s, char c);
-long ft_atoi(char *nb, int *flag);
+long 	ft_atoi(char *nb, int *flag);
 void	ft_print_error(char *str);
 
 int	ft_strcmp(const char *s1, const char *s2);

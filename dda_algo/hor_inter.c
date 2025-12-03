@@ -18,16 +18,16 @@ void	init_hor_step(t_cast *cast, double *xs, double *ys)
 		*xs *= -1;
 }
 
-void	horizonlat_inter(t_data *data, int i, double *end_hor_x, double *end_hor_y)
+void	horizonlat_inter(t_data *data, t_cast *cast, double *end_hor_x, double *end_hor_y)
 {
 	double	x;
 	double	y;
 	double	x_step;
 	double	y_step;
 
-	init_hor_inter(data, &data->cast[i], &x, &y);
-	init_hor_step(&data->cast[i], &x_step, &y_step);
-	if (data->cast[i].facing_up)
+	init_hor_inter(data, cast, &x, &y);
+	init_hor_step(cast, &x_step, &y_step);
+	if (cast->facing_up)
 		y--;
 	while (1)
 	{

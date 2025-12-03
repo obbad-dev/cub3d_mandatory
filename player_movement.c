@@ -1,5 +1,15 @@
 #include "header.h"
 
+bool check_wall(char **map,double x, double y, int rows)
+{
+    int map_x = floor(x / TILE_SIZE);
+    int map_y = floor(y / TILE_SIZE);
+
+    if (map_x < 0 || map_y < 0 || map_y >= rows || map_x >= (int)ft_strlen(map[map_y]))
+        return true;
+    return (map[map_y][map_x] != '0');
+}
+
 int mov_player(int key, t_data *data)
 {
 	
@@ -38,6 +48,6 @@ int mov_player(int key, t_data *data)
 		data->px = x; 
 		data->py = y;
 	}
-	render(data);
+	put_img_to_window(data);
 	return key;
 }

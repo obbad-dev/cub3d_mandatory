@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 long ft_atoi(char *nb, int *flag)
 {

@@ -1,11 +1,11 @@
 #include "../header.h"
 
-void	init_ver_inter(t_data *data, int i, double *x, double *y)
+void	init_ver_inter(t_data *data, t_cast *cast, double *x, double *y)
 {
 	*x = floor(data->px / TILE_SIZE) * TILE_SIZE;
-	if (data->cast[i].facing_right)
+	if (cast->facing_right)
 		*x += TILE_SIZE;
-	*y = data->py + (*x - data->px) * tan(data->cast[i].ray_angle);
+	*y = data->py + (*x - data->px) * tan(cast->ray_angle);
 }
 
 void	init_ver_step(t_cast *cast, double *xs, double *ys)
@@ -18,16 +18,16 @@ void	init_ver_step(t_cast *cast, double *xs, double *ys)
 		*ys *= -1;
 }
 
-void	vertical_inter(t_data *data, int i, double *end_ver_x, double *end_ver_y)
+void	vertical_inter(t_data *data, t_cast *cast, double *end_ver_x, double *end_ver_y)
 {
 	double	x;
 	double	y;
 	double	x_step;
 	double	y_step;
 
-	init_ver_inter(data, i, &x, &y);
-	init_ver_step(&data->cast[i], &x_step, &y_step);
-	if (data->cast[i].facing_left)
+	init_ver_inter(data, cast, &x, &y);
+	init_ver_step(cast, &x_step, &y_step);
+	if (cast->facing_left)
 		x--;
 	while (1)
 	{

@@ -50,7 +50,7 @@ void draw_window(t_data *data)
 	data->img_s = mlx_get_data_addr(data->img_p, &data->bpp, &data->size_line, &data->endian);
 	pos_player(data);
 	data->angle_direction =  get_direction(data->direction);
-	render(data);
+	put_img_to_window(data);
 	mlx_hook(data->win,2, 1L<<0, mov_player, data);
     mlx_loop(data->mlx);
 }

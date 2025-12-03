@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 static size_t	lenword(const char *s, char c)
 {
