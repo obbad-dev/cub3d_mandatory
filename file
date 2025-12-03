@@ -1,11 +1,11 @@
- 
-NO texture/wall.xpm
+
+NO texture/blue_stone.xpm
 
 F 220,100,0
-SO texture/wall.xpm
-WE texture/wall.xpm
+SO texture/eagle.xpm
+WE texture/grey_stone.xpm
 C 255,255,0
-EA texture/wall.xpm
+EA texture/red_brick.xpm
 
 
 			1111111111111111111111111

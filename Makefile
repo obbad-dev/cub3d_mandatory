@@ -3,7 +3,7 @@ LDFLAGS = -lm -lmlx -lXext -lX11 -Lminilibx-linux
 CC = cc
 RM = rm -f
 NAME = cube3D
-SRCS = $(wildcard *.c) $(wildcard gnl/*.c) $(wildcard parsing/*.c) $(wildcard draw_window/*.c)
+SRCS = $(wildcard *.c) $(wildcard gnl/*.c) $(wildcard parsing/*.c) $(wildcard draw_window/*.c) $(wildcard dda_algo/*.c)
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME) clean

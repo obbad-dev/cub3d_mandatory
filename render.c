@@ -26,13 +26,13 @@ void cast_rays(t_data *data)
 		i++;
 	}
 }
-void render(t_data *data)
+void mini_map(t_data *data)
 {
+
 	int i;
 	int j;
 	
 	i = 0;
-	cast(data);
 	while (data->map[i])
 	{
 		j = 0;
@@ -51,5 +51,12 @@ void render(t_data *data)
 	}
 	draw_rectangle(data, MAP_SCAL * (data->px - 10), MAP_SCAL * (data->py - 10), MAP_SCAL * 20, 0xff0000);
 	cast_rays(data);
+}
+int render(t_data *data)
+{
+	cast(data);
+	// mini_map(data);
+	mlx_clear_window(data->mlx, data->win);
 	mlx_put_image_to_window(data->mlx, data->win, data->img_p, 0, 0);
+	return 0;
 }

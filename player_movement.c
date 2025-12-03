@@ -22,7 +22,7 @@ int mov_player(int key, t_data *data)
 	else if (key == 65307)
 		exit(1);
 	
-	data->angle_direction += turn * 0.2; 
+	data->angle_direction += turn * 0.1; 
     int moveStep = walk * MOVE_SPEED; 
 	int move = izaha * MOVE_SPEED;
 	double x = 0, y = 0;

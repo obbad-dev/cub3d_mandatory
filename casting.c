@@ -22,7 +22,7 @@ int get_pixel_color(void *texture_img, int x, int y)
 	return (pixel[x]);
 }
 
-void render3d(t_data *data, int i)
+void render3d(t_data *data, t_cast *cast, int i)
 {
 	double distance_projection_plan;
 	double dist_perpo;
@@ -32,9 +32,10 @@ void render3d(t_data *data, int i)
 	int y;
 	int tex_x;
 	int tex_y;
+	void *img;
 
-	dist_perpo = data->cast[i].distance * cos(data->cast[i]. ray_angle - data->angle_direction);
 	distance_projection_plan = (WIN_WIDTH / 2) / tan(data->fov / 2);
+	dist_perpo = cast->distance * cos(cast->ray_angle - data->angle_direction);
 
 	tall_wall = (TILE_SIZE / dist_perpo) * distance_projection_plan;
 
@@ -45,26 +46,37 @@ void render3d(t_data *data, int i)
 		wall_begin = 0;
 	if (wall_end > WIN_HEIGHT)
 		wall_end = WIN_HEIGHT;
-
+	
 	y = 0;
 	while (y < wall_begin)
 	{
 		put_color(data, i, y, data->color_c);
 		y++;
 	}
-
-	y = wall_begin;
-	if (!data->cast[i].is_hor)
-		tex_x = data->cast[i].end_y % TILE_SIZE;
+	if (cast->is_hor)
+	{
+		tex_x = cast->end_x % TILE_SIZE;
+		if (cast->facing_up)
+			img = data->no;
+		else
+			img = data->so;
+	}
 	else
-		tex_x = data->cast[i].end_x % TILE_SIZE;
+	{
+		tex_x = cast->end_y % TILE_SIZE;
+		if (cast->facing_left)
+			img = data->we;
+		else
+			img = data->ea;
+	}
+	y = wall_begin;
 	while (y < wall_end)
 	{
-		tex_y = (y - wall_begin) * (64.0 / tall_wall);
-		put_color(data, i, y, get_pixel_color(data->we, tex_x, tex_y));
+		int dis = y + (tall_wall / 2) - (WIN_HEIGHT / 2);// eq (y - wall_begin) but in the right wall begin 
+		tex_y = dis * (64.0 / tall_wall);
+		put_color(data, i, y, get_pixel_color(img, tex_x, tex_y));
 		y++;
 	}
-
 	y = wall_end;
 	while (y < WIN_HEIGHT)
 	{
@@ -83,12 +95,11 @@ void cast(t_data *data)
     ray_angle = data->angle_direction - (data->fov / 2);
     while (i < NUM_RAYS)
     {
-		data->cast[i].ray_angle = ray_angle;
-		DDA(data, data->cast[i].ray_angle, i);
+		data->cast[i].ray_angle = handle_angle(ray_angle);
+		dda_algo(data, i);
 		ray_angle +=data->fov / NUM_RAYS;
 		i++;
     }
-	
 	
 }
 

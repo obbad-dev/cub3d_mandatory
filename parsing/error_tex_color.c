@@ -21,8 +21,8 @@ bool check_parse_textures_is_valide(t_textures *tex, t_data *data)
 	}
 	if (!data->no || !data->so || !data->we || !data->ea)
 		return false;
-	else
-		return true;
+	free_texture(data->tex, NULL);
+	return true;
 }
 
 void	validate_textures(t_data *data, char **content, int k)
