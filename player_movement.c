@@ -30,7 +30,7 @@ int mov_player(int key, t_data *data)
 	else if (key == 'd')
 		izaha = 1;
 	else if (key == 65307)
-		exit(1);
+		exit((free_destroy_all(data), 1));
 	
 	data->angle_direction += turn * 0.1; 
     int moveStep = walk * MOVE_SPEED; 

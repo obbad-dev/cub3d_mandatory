@@ -31,10 +31,10 @@ void dda_and_rendring(t_data *data)
 
 int put_img_to_window(t_data *data)
 {
-	dda_and_rendring(data);
-	mlx_clear_window(data->mlx, data->win);
-	mlx_put_image_to_window(data->mlx, data->win, data->img_p, 0, 0);
-	return 0;
+    dda_and_rendring(data);
+    mlx_clear_window(data->mlx, data->win);
+    mlx_put_image_to_window(data->mlx, data->win, data->img_p, 0, 0);
+    return 0;
 }
 
 

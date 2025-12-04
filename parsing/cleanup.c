@@ -32,3 +32,4 @@ void free_texture(t_textures *tex, char **content)
 	free_all(content);
 }
 
+

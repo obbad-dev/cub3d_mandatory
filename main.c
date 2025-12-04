@@ -16,8 +16,6 @@ void init_textures(t_textures *tex, t_data *data)
 	data->ea = NULL;
 }
 
-
-
 int main(int ac, char *av[])
 {
 	int size;
@@ -35,13 +33,3 @@ int main(int ac, char *av[])
 	draw_window(&data);
     return (0);
 }
-
-	// mlx_destroy_image(data.mlx, data.no);
-	// mlx_destroy_image(data.mlx, data.so);
-	// mlx_destroy_image(data.mlx, data.we);
-	// mlx_destroy_image(data.mlx, data.ea);
-	// free(data.mlx);
-
-// t_data data;
-
- 

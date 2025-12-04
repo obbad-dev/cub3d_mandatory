@@ -21,18 +21,7 @@ void pos_player(t_data *data)
 	// 	// data->py++;
 	// }
 }
-void destroy_imgs(t_data *data)
-{
-	if (data->ea)
-		mlx_destroy_image(data->mlx,data->ea);
-	if (data->we)
-		mlx_destroy_image(data->mlx,data->we);
-	if (data->so)
-		mlx_destroy_image(data->mlx,data->so);
-	if (data->no)
-		mlx_destroy_image(data->mlx, data->no);
-	free(data->mlx);
-}
+
 void draw_window(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -43,6 +32,8 @@ void draw_window(t_data *data)
 		ft_print_error("Error\ninvalid path of textures\n");
 		free_texture(data->tex, data->map);
 		destroy_imgs(data);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
 		exit(1);
 	}
     data->win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");

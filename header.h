@@ -76,11 +76,7 @@ typedef struct s_data
 	void *so;
 	void *we;
 	void *ea;
-	double  last_time;
-    double  delta_time;
-    double  fps;
-	t_cast cast[NUM_RAYS];
-
+	
 } t_data;
 
 void 	draw_window(t_data *data);
@@ -120,4 +116,7 @@ void	extract_textures_colors(char **content, t_data *data);
 int count_line_map(char **content);
 void parse_map(char **content, t_data *data);
 
+
+void destroy_imgs(t_data *data);
+void free_destroy_all(t_data *data);
 #endif
