@@ -7,19 +7,18 @@ void	select_texture(t_data *data, t_cast *cast)
 		cast->tex_x = cast->end_x % TILE_SIZE;
 		if (cast->facing_up)
 			cast->img = data->no;
-		else
+		else if (cast->facing_down)
 			cast->img = data->so;
 	}
-	else
+	else if (!cast->is_hor)
 	{
 		cast->tex_x = cast->end_y % TILE_SIZE;
 		if (cast->facing_left)
 			cast->img = data->we;
-		else
+		else if (cast->facing_right)
 			cast->img = data->ea;
 	}
 }
-
 void	draw_wall(t_data *data, t_cast *cast, int i)
 {
 	int	y;

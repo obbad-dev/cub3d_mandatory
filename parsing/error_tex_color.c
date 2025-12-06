@@ -9,13 +9,13 @@ bool check_parse_textures_is_valide(t_textures *tex, t_data *data)
 	i = 0;
 	while (i < 4)
 	{
-		if (!strcmp(tex[i].id, "NO"))
+		if (!ft_strcmp(tex[i].id, "NO"))
 			data->no = mlx_xpm_file_to_image(data->mlx, tex[i].path, &w, &h);
-		else if (!strcmp(tex[i].id, "SO"))
+		else if (!ft_strcmp(tex[i].id, "SO"))
 			data->so = mlx_xpm_file_to_image(data->mlx, tex[i].path, &w, &h);
-		else if(!strcmp(tex[i].id, "WE"))
+		else if(!ft_strcmp(tex[i].id, "WE"))
 			data->we = mlx_xpm_file_to_image(data->mlx, tex[i].path, &w, &h);
-		else if (!strcmp(tex[i].id, "EA"))
+		else if (!ft_strcmp(tex[i].id, "EA"))
 			data->ea = mlx_xpm_file_to_image(data->mlx, tex[i].path, &w, &h);
 		i++;
 	}

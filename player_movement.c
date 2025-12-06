@@ -10,44 +10,95 @@ bool check_wall(char **map,double x, double y, int rows)
     return (map[map_y][map_x] != '0');
 }
 
-int mov_player(int key, t_data *data)
+
+int key_press(t_key key, t_keys *keys)
 {
-	
-	int walk = 0;
-	int turn = 0;
-	int izaha = 0;
+	if (key == KYS_A)
+		keys->kys_a = TRUE;
+	else if (key == KYS_D)
+		keys->kys_d = TRUE;
+	else if (key == KYS_S)
+		keys->kys_s = TRUE;
+	else if (key == KYS_W)
+		keys->kys_w = TRUE;
+	else if (key == KYS_LEFT)
+		keys->kys_left = TRUE;
+	else if (key == KYS_RIGHT)
+		keys->kys_right = TRUE;
+	else if (key == k_ESC)
+		keys->kys_esc = TRUE;
+	return 0;
+}
 
-	if (key == 65362)
-		walk = 1;
-	else if (key == 65364)
-		walk = -1;
-	else if (key == 65361)
-		turn = -1;
-	else if (key ==  65363)
-		turn = 1;
-	else if (key == 'a')
-		izaha = -1;
-	else if (key == 'd')
-		izaha = 1;
-	else if (key == 65307)
-		exit((free_destroy_all(data), 1));
-	
-	data->angle_direction += turn * 0.1; 
-    int moveStep = walk * MOVE_SPEED; 
-	int move = izaha * MOVE_SPEED;
-	double x = 0, y = 0;
+int key_release(t_key key, t_keys *keys)
+{
+	if (key == KYS_A)
+		keys->kys_a = FALSE;
+	else if (key == KYS_D)
+		keys->kys_d = FALSE;
+	else if (key == KYS_S)
+		keys->kys_s = FALSE;
+	else if (key == KYS_W)
+		keys->kys_w = FALSE;
+	else if (key == KYS_LEFT)
+		keys->kys_left = FALSE;
+	else if (key == KYS_RIGHT)
+		keys->kys_right = FALSE;
+	else if (key == k_ESC)
+		keys->kys_esc = FALSE;
+	return 0;
+}
 
-	x = data->px + cos(data->angle_direction) * moveStep;
-	y = data->py + sin(data->angle_direction) * moveStep;
-	if (izaha)
+void move(double *x, double *y, t_data *data, t_move move_direction)
+{
+	*x = 0;
+	*y = 0;
+	if (move_direction == MOVE_UP)
 	{
-		x = data->px + cos(data->angle_direction + M_PI / 2) * move;
-		y = data->py + sin(data->angle_direction + M_PI / 2) * move;
+		*x = data->px + cos(data->angle_direction) * MOVE_SPEED;
+		*y = data->py + sin(data->angle_direction) * MOVE_SPEED;
 	}
-	if (!check_wall(data->map,x, y, data->rows)){
+	else if (move_direction == MOVE_DOWN)
+	{
+		*x = data->px - cos(data->angle_direction) * MOVE_SPEED;
+		*y = data->py - sin(data->angle_direction) * MOVE_SPEED;
+	}
+	else if (move_direction == MOVE_LEFT)
+	{
+		*x = data->px - cos(data->angle_direction + M_PI / 2) * MOVE_SPEED;
+		*y = data->py - sin(data->angle_direction + M_PI / 2) * MOVE_SPEED;
+	}
+	else if (move_direction == MOVE_RIGHT)
+	{
+		*x = data->px + cos(data->angle_direction + M_PI / 2) * MOVE_SPEED;
+		*y = data->py + sin(data->angle_direction + M_PI / 2) * MOVE_SPEED;
+	}
+}
+
+void mov_player(t_data *data)
+{
+	double x;
+	double y;
+	t_keys *key;
+
+	key = data->keys;
+	if (key->kys_a)
+		move(&x, &y, data, MOVE_LEFT);
+	if (key->kys_d)
+		move(&x, &y, data, MOVE_RIGHT);
+	if (key->kys_w)
+		move(&x, &y, data, MOVE_UP);
+	if (key->kys_s)
+		move(&x, &y, data, MOVE_DOWN);
+	if (key->kys_left)
+		data->angle_direction -= ROTATION_SPEED;
+	if (key->kys_right)
+		data->angle_direction += ROTATION_SPEED;
+	if (key->kys_esc)
+		exit ((free_destroy_all(data), 0));
+	if (!check_wall(data->map,x, y, data->rows))
+	{
 		data->px = x; 
 		data->py = y;
 	}
-	put_img_to_window(data);
-	return key;
 }
