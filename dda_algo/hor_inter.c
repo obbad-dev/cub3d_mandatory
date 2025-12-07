@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hor_inter.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:23:55 by oobbad            #+#    #+#             */
+/*   Updated: 2025/12/07 12:23:56 by oobbad           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header.h"
 
 void	init_hor_inter(t_data *data, t_cast *cast, double *x, double *y)
@@ -18,7 +30,8 @@ void	init_hor_step(t_cast *cast, double *xs, double *ys)
 		*xs *= -1;
 }
 
-void	horizonlat_inter(t_data *data, t_cast *cast, double *end_hor_x, double *end_hor_y)
+void	horizonlat_inter(t_data *data, t_cast *cast, double *end_hor_x,
+		double *end_hor_y)
 {
 	double	x;
 	double	y;

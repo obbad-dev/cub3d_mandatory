@@ -1,95 +1,140 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:25:09 by oobbad            #+#    #+#             */
+/*   Updated: 2025/12/07 12:25:10 by oobbad           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header.h"
 
-bool valid_caracter(char c, char *dir)
+bool	valid_caracter(char c, int x, int y, t_data *data)
 {
-	static int one_time;
+	static int	one_time;
 
 	if (c == '1' || c == '0')
-		return true;
+		return (true);
 	else if ((c == 'N' || c == 'S' || c == 'W' || c == 'E') && one_time == 0)
 	{
-		
-		*dir = c;
+		data->px = x * TILE_SIZE;
+		data->py = y * TILE_SIZE;
+		data->direction = c;
 		return (one_time++, true);
 	}
 	else
-		return false;
+		return (false);
 }
 
-bool first_last_is_one(char *line)
+bool	first_last_is_one(char *line)
 {
-	int j;
-	int size_line;
+	int	j;
+	int	size_line;
 
 	j = 0;
 	size_line = ft_strlen(line);
 	skip_spaces(line, &j);
 	if (line[j] != '1' || line[size_line - 1] != '1')
-		return false;
+		return (false);
 	else
-		return true;
+		return (true);
 }
-bool surronded_by_wall(char **map, int size)
+bool	surronded_by_wall(char **map, int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map && map[i])
 	{
-		if ((i == 0 || i == size -1) && !check_line_is_one(map[i], NULL))
+		if ((i == 0 || i == size - 1) && !check_line_is_one(map[i], NULL))
 		{
 			ft_print_error("Error\nLine invalide\n");
-			return false;
+			return (false);
 		}
 		else if (!first_last_is_one(map[i]))
 		{
 			ft_print_error("Error\nLine invalide\n");
-			return false;
+			return (false);
 		}
 		i++;
 	}
-	return true;
+	return (true);
 }
 
-int count_line_map(char **content)
+int	count_line_map(char **content)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(content && content[i])
+	while (content && content[i])
 	{
 		i++;
 	}
-	return i;
+	return (i);
 }
 
-bool check_map(char **map, t_data *data)
+bool	check_zero(char **map, int rows)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map && map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (i - 1 >= 0 && i + 1 < rows && map[i][j] == '0')
+			{
+				if ((j < (int)ft_strlen(map[i - 1]) && j < (int)ft_strlen(map[i
+							+ 1])) && (ft_isspace(map[i - 1][j])
+						|| ft_isspace(map[i + 1][j])))
+					return (FALSE);
+			}
+			if (j + 1 < (int)ft_strlen(map[i]) && j - 1 >= 0
+				&& map[i][j] == '0')
+			{
+				if (ft_isspace(map[i][j + 1]) || ft_isspace(map[i][j - 1]))
+					return (FALSE);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (TRUE);
+}
+
+bool	check_map(char **map, t_data *data)
+{
+	int	i;
+	int	j;
+
 	i = 0;
 	while (map[i])
 	{
 		j = 0;
-		while(map[i][j])
+		while (map[i][j])
 		{
-			if (!valid_caracter(map[i][j], &data->direction) && !ft_isspace(map[i][j]))
-				return ( write(2, "invalide character\n", 19), false);
+			if (!valid_caracter(map[i][j], j, i, data)
+				&& !ft_isspace(map[i][j]))
+				return (write(2, "invalide character\n", 19), false);
 			j++;
 		}
 		i++;
 	}
 	data->rows = count_line_map(map);
-	if (!surronded_by_wall(map, data->rows))
-		return false;
+	if (!surronded_by_wall(map, data->rows) || !check_zero(map, data->rows))
+		return (false);
 	else
-		return true;
+		return (true);
 }
 
-bool fill_map(char **content, t_data *data)
+bool	fill_map(char **content, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->map = malloc((count_line_map(content) + 1) * sizeof(char *));
@@ -99,16 +144,16 @@ bool fill_map(char **content, t_data *data)
 	{
 		data->map[i] = ft_strdup(content[i]);
 		if (!data->map[i])
-			return (free_all(data->map), ft_print_error("malloc fail\n"), false);
+			return (free_all(data->map), ft_print_error("malloc fail\n"),
+				false);
 		i++;
 	}
 	data->map[i] = NULL;
-	return true;
+	return (true);
 }
 
-void parse_map(char **content, t_data *data)
+void	parse_map(char **content, t_data *data)
 {
-
 	if (!fill_map(content + data->begin_map, data))
 		exit((free_texture(data->tex, content), 1));
 	free_all(content);

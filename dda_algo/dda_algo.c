@@ -1,21 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dda_algo.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:24:01 by oobbad            #+#    #+#             */
+/*   Updated: 2025/12/07 12:33:03 by oobbad           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header.h"
 
-double distance(double x1, double y1, double x2, double y2)
+double	distance(double x1, double y1, double x2, double y2)
 {
-	double res;
+	double	res;
 
 	res = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
-	return res;
+	return (res);
 }
 
-void facing_player(t_cast *cast)
+void	facing_player(t_cast *cast)
 {
 	if (cast->ray_angle > M_PI && cast->ray_angle < 2 * M_PI)
 		cast->facing_up = true;
 	else
-		 cast->facing_up = false;
+		cast->facing_up = false;
 	cast->facing_down = !cast->facing_up;
-
 	if (cast->ray_angle < (M_PI / 2) || cast->ray_angle > (3 * M_PI / 2))
 		cast->facing_right = true;
 	else
@@ -53,5 +64,3 @@ void	dda_algo(t_data *data, t_cast *cast)
 	else
 		set_hit(cast, end_ver_x, end_ver_y, dist_ver);
 }
-
-

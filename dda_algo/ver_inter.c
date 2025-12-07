@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ver_inter.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:23:50 by oobbad            #+#    #+#             */
+/*   Updated: 2025/12/07 12:23:51 by oobbad           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header.h"
 
 void	init_ver_inter(t_data *data, t_cast *cast, double *x, double *y)
@@ -18,7 +30,8 @@ void	init_ver_step(t_cast *cast, double *xs, double *ys)
 		*ys *= -1;
 }
 
-void	vertical_inter(t_data *data, t_cast *cast, double *end_ver_x, double *end_ver_y)
+void	vertical_inter(t_data *data, t_cast *cast, double *end_ver_x,
+		double *end_ver_y)
 {
 	double	x;
 	double	y;

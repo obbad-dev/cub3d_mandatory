@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pars_textures.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:25:01 by oobbad            #+#    #+#             */
+/*   Updated: 2025/12/07 12:25:02 by oobbad           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header.h"
 
 int	handle_no_texture(char *line, int j, t_data *data, int *k)
 {
-
-	if (line[j] == 'N' && line[j + 1] == 'O' 
-		&& ft_isspace(line[j + 2]) 
+	if (line[j] == 'N' && line[j + 1] == 'O' && ft_isspace(line[j + 2])
 		&& !check_if_double_id(data->tex, "NO"))
 	{
 		j += 2;
@@ -19,8 +29,7 @@ int	handle_no_texture(char *line, int j, t_data *data, int *k)
 
 int	handle_so_texture(char *line, int j, t_data *data, int *k)
 {
-	if (line[j] == 'S' && line[j + 1] == 'O' 
-		&& ft_isspace(line[j + 2]) 
+	if (line[j] == 'S' && line[j + 1] == 'O' && ft_isspace(line[j + 2])
 		&& !check_if_double_id(data->tex, "SO"))
 	{
 		j += 2;
@@ -35,8 +44,7 @@ int	handle_so_texture(char *line, int j, t_data *data, int *k)
 
 int	handle_we_texture(char *line, int j, t_data *data, int *k)
 {
-	if (line[j] == 'W' && line[j + 1] == 'E' 
-		&& ft_isspace(line[j + 2]) 
+	if (line[j] == 'W' && line[j + 1] == 'E' && ft_isspace(line[j + 2])
 		&& !check_if_double_id(data->tex, "WE"))
 	{
 		j += 2;
@@ -51,9 +59,7 @@ int	handle_we_texture(char *line, int j, t_data *data, int *k)
 
 int	handle_ea_texture(char *line, int j, t_data *data, int *k)
 {
-
-	if (line[j] == 'E' && line[j + 1] == 'A' 
-		&& ft_isspace(line[j + 2]) 
+	if (line[j] == 'E' && line[j + 1] == 'A' && ft_isspace(line[j + 2])
 		&& !check_if_double_id(data->tex, "EA"))
 	{
 		j += 2;

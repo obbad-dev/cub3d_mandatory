@@ -6,7 +6,7 @@
 /*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:33:38 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/06 16:34:31 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/07 12:39:18 by oobbad           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ typedef enum s_move
 	MOVE_UP = 2,
 	MOVE_DOWN,
 	MOVE_LEFT,
-	MOVE_RIGHT
+	MOVE_RIGHT,
+	ROTATION_LEFT,
+	ROTATION_RIGHT
 }				t_move;
 
 typedef struct s_keys
@@ -112,7 +114,7 @@ typedef struct s_data
 	char		**map;
 	int			rows;
 	t_textures	tex[4];
-	t_keys		*keys;
+	t_keys		keys;
 	char		direction;
 	void		*no;
 	void		*so;

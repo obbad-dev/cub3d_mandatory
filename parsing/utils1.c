@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:25:21 by oobbad            #+#    #+#             */
+/*   Updated: 2025/12/07 12:25:22 by oobbad           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header.h"
 
-
-int ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	return ((c >= 9 && c <= 13) || c == 32);
 }
@@ -13,7 +24,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	i = 0;
 	if ((!s1 && !s2))
 		return (0);
-	while (((unsigned char)s1[i] == (unsigned char)s2[i]) 
+	while (((unsigned char)s1[i] == (unsigned char)s2[i])
 		&& ((unsigned char)s2[i] || (unsigned char)s1[i]))
 	{
 		i++;
@@ -21,9 +32,9 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-bool check_if_double_id(t_textures *tex, char *str)
+bool	check_if_double_id(t_textures *tex, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 4)
@@ -32,12 +43,12 @@ bool check_if_double_id(t_textures *tex, char *str)
 			return (true);
 		i++;
 	}
-	return false;
+	return (false);
 }
 
-bool check_line_is_one(char *line, int *begin_map)
+bool	check_line_is_one(char *line, int *begin_map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line && line[i])
@@ -48,21 +59,19 @@ bool check_line_is_one(char *line, int *begin_map)
 	}
 	if (begin_map)
 		*begin_map = 1;
-	return true;
-
+	return (true);
 }
 
-
-bool check_if_malloc_fail(t_textures* tex)
+bool	check_if_malloc_fail(t_textures *tex)
 {
 	int i;
-	
-	i = 0; 
+
+	i = 0;
 	while (i < 4)
 	{
 		if (!tex[i].id || !tex->path)
-			return true;
+			return (true);
 		i++;
 	}
-	return false;
+	return (false);
 }

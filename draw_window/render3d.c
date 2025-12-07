@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render3d.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/07 12:24:14 by oobbad            #+#    #+#             */
+/*   Updated: 2025/12/07 12:34:24 by oobbad           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../header.h"
 
 void	select_texture(t_data *data, t_cast *cast)
@@ -19,10 +31,11 @@ void	select_texture(t_data *data, t_cast *cast)
 			cast->img = data->ea;
 	}
 }
+
 void	draw_wall(t_data *data, t_cast *cast, int i)
 {
 	int	y;
-	int color;
+	int	color;
 
 	y = cast->wall_begin;
 	while (y < cast->wall_end)
@@ -44,18 +57,18 @@ void	draw_floor_celling(t_data *data, t_cast *cast, int i)
 		put_color(data, i, y, data->color_c);
 		y++;
 	}
-
 	y = cast->wall_end;
 	while (y < WIN_HEIGHT)
 	{
 		put_color(data, i, y, data->color_f);
 		y++;
 	}
-
 }
-void compute_wall(t_cast *cast, t_data *data)
+
+void	compute_wall(t_cast *cast, t_data *data)
 {
-	cast->dist_perpo = cast->distance * cos(cast->ray_angle - data->angle_direction);
+	cast->dist_perpo = cast->distance * cos(cast->ray_angle
+			- data->angle_direction);
 	cast->tall_wall = (TILE_SIZE / cast->dist_perpo) * cast->dist_proj_plan;
 	cast->wall_begin = (WIN_HEIGHT / 2) - (cast->tall_wall / 2);
 	cast->true_begin_wall = cast->wall_begin;
