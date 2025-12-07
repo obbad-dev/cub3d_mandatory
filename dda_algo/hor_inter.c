@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hor_inter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kakbour <kakbour@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 12:23:55 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 12:23:56 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/07 16:08:24 by kakbour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	init_hor_inter(t_data *data, t_cast *cast, double *x, double *y)
 {
-	*y = floor(data->py / TILE_SIZE) * TILE_SIZE;
+	*y = floor(data->py / TILE_SIZE) * TILE_SIZE - 0.001;
 	if (cast->facing_down)
-		*y += TILE_SIZE;
+		*y = floor(data->py / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 	*x = data->px + (*y - data->py) / tan(cast->ray_angle);
 }
 
@@ -40,8 +40,6 @@ void	horizonlat_inter(t_data *data, t_cast *cast, double *end_hor_x,
 
 	init_hor_inter(data, cast, &x, &y);
 	init_hor_step(cast, &x_step, &y_step);
-	if (cast->facing_up)
-		y--;
 	while (1)
 	{
 		if (check_wall(data->map, x, y, data->rows))

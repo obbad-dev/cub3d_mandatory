@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render3d.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kakbour <kakbour@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 12:24:14 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 12:34:24 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/07 16:31:58 by kakbour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,23 @@ void	select_texture(t_data *data, t_cast *cast)
 	}
 }
 
-void	draw_wall(t_data *data, t_cast *cast, int i)
+void	draw_all(t_data *data, t_cast *cast, int i)
 {
 	int	y;
 	int	color;
 
+	y = 0;
+	while (y < cast->wall_begin)
+	{
+		put_color(data, i, y, data->color_c);
+		y++;
+	}
 	y = cast->wall_begin;
 	while (y < cast->wall_end)
 	{
 		cast->tex_y = (y - cast->true_begin_wall) * (64.0 / cast->tall_wall);
 		color = get_pixel_color(cast->img, cast->tex_x, cast->tex_y);
 		put_color(data, i, y, color);
-		y++;
-	}
-}
-
-void	draw_floor_celling(t_data *data, t_cast *cast, int i)
-{
-	int	y;
-
-	y = 0;
-	while (y < cast->wall_begin)
-	{
-		put_color(data, i, y, data->color_c);
 		y++;
 	}
 	y = cast->wall_end;
@@ -86,7 +80,6 @@ void	render3d(t_data *data, t_cast *cast)
 	i = i % NUM_RAYS;
 	compute_wall(cast, data);
 	select_texture(data, cast);
-	draw_floor_celling(data, cast, i);
-	draw_wall(data, cast, i);
+	draw_all(data, cast, i);
 	i++;
 }

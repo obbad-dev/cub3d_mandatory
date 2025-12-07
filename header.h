@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kakbour <kakbour@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:33:38 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 12:39:18 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/07 17:03:24 by kakbour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct s_data
 	void		*so;
 	void		*we;
 	void		*ea;
+	int			turn_on;
 
 }				t_data;
 

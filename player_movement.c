@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kakbour <kakbour@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 12:26:01 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 12:43:13 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/07 17:10:31 by kakbour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	key_release(t_key key, t_keys *keys)
 
 void	move(double *x, double *y, t_data *data, t_move move_direction)
 {
+	data->turn_on = 1;
 	if (move_direction == MOVE_UP)
 	{
 		*x = data->px + cos(data->angle_direction) * MOVE_SPEED;
@@ -85,10 +86,19 @@ void	move(double *x, double *y, t_data *data, t_move move_direction)
 		*x = data->px + cos(data->angle_direction + M_PI / 2) * MOVE_SPEED;
 		*y = data->py + sin(data->angle_direction + M_PI / 2) * MOVE_SPEED;
 	}
-	else if (move_direction == ROTATION_LEFT)
-		data->angle_direction -= ROTATION_SPEED;
-	else if (move_direction == ROTATION_RIGHT)
-		data->angle_direction += ROTATION_SPEED;
+}
+
+bool	check_outofmap(char **map, double x, double y, int rows)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = floor(x / TILE_SIZE);
+	map_y = floor(y / TILE_SIZE);
+	if (map_x < 0 || map_y < 0 || map_y >= rows
+		|| map_x >= (int)ft_strlen(map[map_y]))
+		return (true);
+	return false;
 }
 
 void	mov_player(t_data *data)
@@ -98,6 +108,7 @@ void	mov_player(t_data *data)
 
 	x = 0;
 	y = 0;
+	data->turn_on = 0;
 	if (data->keys.kys_a)
 		move(&x, &y, data, MOVE_LEFT);
 	if (data->keys.kys_d)
@@ -107,12 +118,12 @@ void	mov_player(t_data *data)
 	if (data->keys.kys_s)
 		move(&x, &y, data, MOVE_DOWN);
 	if (data->keys.kys_left)
-		move(&x, &y, data, ROTATION_LEFT);
+		data->angle_direction -= ROTATION_SPEED;
 	if (data->keys.kys_right)
-		move(&x, &y, data, ROTATION_RIGHT);
+		data->angle_direction += ROTATION_SPEED;
 	if (data->keys.kys_esc)
 		exit((free_destroy_all(data), 0));
-	if (!check_wall(data->map, x, y, data->rows))
+	if (data->turn_on && !check_outofmap(data->map, x, y, data->rows))
 	{
 		data->px = x;
 		data->py = y;

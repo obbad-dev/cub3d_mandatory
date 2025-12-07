@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ver_inter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kakbour <kakbour@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 12:23:50 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 12:23:51 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/07 16:08:16 by kakbour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	init_ver_inter(t_data *data, t_cast *cast, double *x, double *y)
 {
-	*x = floor(data->px / TILE_SIZE) * TILE_SIZE;
+	*x = floor(data->px / TILE_SIZE) * TILE_SIZE - 0.001;
 	if (cast->facing_right)
-		*x += TILE_SIZE;
+		*x = floor(data->px / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
 	*y = data->py + (*x - data->px) * tan(cast->ray_angle);
 }
 
@@ -40,8 +40,6 @@ void	vertical_inter(t_data *data, t_cast *cast, double *end_ver_x,
 
 	init_ver_inter(data, cast, &x, &y);
 	init_ver_step(cast, &x_step, &y_step);
-	if (cast->facing_left)
-		x--;
 	while (1)
 	{
 		if (check_wall(data->map, x, y, data->rows))
