@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakbour <kakbour@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:33:38 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 17:03:24 by kakbour          ###   ########.fr       */
+/*   Updated: 2025/12/09 14:24:13 by oobbad           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define WIN_HEIGHT 1080
 # define NUM_RAYS 1920
 # define ROTATION_SPEED 0.02
+# define MAP_SCAL 0.1
 
 # define M_PI 3.14159265358979323846
 
@@ -35,14 +36,17 @@
 
 typedef enum s_key
 {
-	KYS_A = 97,
-	KYS_S = 115,
-	KYS_D = 100,
-	KYS_W = 119,
-	KYS_LEFT = 65361,
-	KYS_RIGHT = 65363,
-	k_ESC = 65307
+	KYS_A      = 97,
+	KYS_S      = 115,
+	KYS_D      = 100,
+	KYS_W      = 119,
+	KYS_LEFT   = 65361,
+	KYS_RIGHT  = 65363,
+	k_ESC      = 65307,
+	KYS_F1     = 65470,
+	KYS_SHIFT  = 65505, // Shift_L (or 65506 for Shift_R)
 }				t_key;
+
 
 typedef enum s_move
 {
@@ -63,6 +67,8 @@ typedef struct s_keys
 	bool		kys_left;
 	bool		kys_right;
 	bool		kys_esc;
+	bool		kys_f1;
+	bool		kys_shift;
 }				t_keys;
 
 typedef struct s_cast
@@ -96,14 +102,18 @@ typedef struct s_textures
 
 typedef struct s_data
 {
-	void		*mlx;
-	void		*win;
 	double		px;
 	double		py;
 	double		angle_direction;
 	double		fov;
+	void		*mlx;
+	void		*win;
 	void		*img_p;
 	char		*img_s;
+	void		*no;
+	void		*so;
+	void		*we;
+	void		*ea;
 	int			bpp;
 	int			size_line;
 	int			endian;
@@ -111,18 +121,19 @@ typedef struct s_data
 	int			begin_map;
 	int			color_c;
 	int			color_f;
-	char		**map;
 	int			rows;
+	int			turn_on;
+	char		**map;
+	char		direction;
 	t_textures	tex[4];
 	t_keys		keys;
-	char		direction;
-	void		*no;
-	void		*so;
-	void		*we;
-	void		*ea;
-	int			turn_on;
-
+	bool		mini_map;
+	bool 		click;
+	int 		speed;
 }				t_data;
+
+//============================ mini map ========================
+void mini_map(t_data *data, t_cast *cast);
 
 //=========================== RENDERING =======================
 void			render3d(t_data *data, t_cast *cast);

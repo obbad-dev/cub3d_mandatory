@@ -6,7 +6,7 @@
 /*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 12:24:18 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 12:43:52 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/08 11:10:04 by oobbad           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,18 @@ void	init_keys(t_keys *key)
 	key->kys_w = false;
 	key->kys_s = false;
 	key->kys_d = false;
+	key->kys_f1 = false;
+	key->kys_esc = false;
 	key->kys_left = false;
 	key->kys_right = false;
-	key->kys_esc = false;
+	key->kys_shift = false;
 }
 
 int	game_loop(t_data *data)
 {
 	put_img_to_window(data);
 	mov_player(data);
+	// usleep(30000);
 	return (0);
 }
 

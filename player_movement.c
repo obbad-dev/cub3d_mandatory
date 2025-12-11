@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kakbour <kakbour@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 12:26:01 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 17:10:31 by kakbour          ###   ########.fr       */
+/*   Updated: 2025/12/09 14:19:44 by oobbad           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ int	key_press(t_key key, t_keys *keys)
 		keys->kys_right = TRUE;
 	else if (key == k_ESC)
 		keys->kys_esc = TRUE;
+	else if (key == KYS_F1)
+		keys->kys_f1 = TRUE;
+	else if (key == KYS_SHIFT)
+		keys->kys_shift = TRUE;
 	return (0);
 }
 
@@ -60,31 +64,34 @@ int	key_release(t_key key, t_keys *keys)
 		keys->kys_right = FALSE;
 	else if (key == k_ESC)
 		keys->kys_esc = FALSE;
+	else if (key == KYS_F1)
+		keys->kys_f1 = FALSE;
+	else if (key == KYS_SHIFT)
+		keys->kys_shift = FALSE;
 	return (0);
 }
 
 void	move(double *x, double *y, t_data *data, t_move move_direction)
 {
-	data->turn_on = 1;
 	if (move_direction == MOVE_UP)
 	{
-		*x = data->px + cos(data->angle_direction) * MOVE_SPEED;
-		*y = data->py + sin(data->angle_direction) * MOVE_SPEED;
+		*x = data->px + cos(data->angle_direction) * MOVE_SPEED * data->speed;
+		*y = data->py + sin(data->angle_direction) * MOVE_SPEED * data->speed;
 	}
 	else if (move_direction == MOVE_DOWN)
 	{
-		*x = data->px - cos(data->angle_direction) * MOVE_SPEED;
-		*y = data->py - sin(data->angle_direction) * MOVE_SPEED;
+		*x = data->px - cos(data->angle_direction) * MOVE_SPEED * data->speed;
+		*y = data->py - sin(data->angle_direction) * MOVE_SPEED * data->speed;
 	}
 	else if (move_direction == MOVE_LEFT)
 	{
-		*x = data->px - cos(data->angle_direction + M_PI / 2) * MOVE_SPEED;
-		*y = data->py - sin(data->angle_direction + M_PI / 2) * MOVE_SPEED;
+		*x = data->px - cos(data->angle_direction + M_PI / 2) * MOVE_SPEED * data->speed;
+		*y = data->py - sin(data->angle_direction + M_PI / 2) * MOVE_SPEED * data->speed;
 	}
 	else if (move_direction == MOVE_RIGHT)
 	{
-		*x = data->px + cos(data->angle_direction + M_PI / 2) * MOVE_SPEED;
-		*y = data->py + sin(data->angle_direction + M_PI / 2) * MOVE_SPEED;
+		*x = data->px + cos(data->angle_direction + M_PI / 2) * MOVE_SPEED * data->speed;
+		*y = data->py + sin(data->angle_direction + M_PI / 2) * MOVE_SPEED * data->speed;
 	}
 }
 
@@ -105,10 +112,13 @@ void	mov_player(t_data *data)
 {
 	double	x;
 	double	y;
+	
 
 	x = 0;
 	y = 0;
-	data->turn_on = 0;
+	data->speed = 1;
+	if (data->keys.kys_shift)
+		data->speed = 3;
 	if (data->keys.kys_a)
 		move(&x, &y, data, MOVE_LEFT);
 	if (data->keys.kys_d)
@@ -121,9 +131,17 @@ void	mov_player(t_data *data)
 		data->angle_direction -= ROTATION_SPEED;
 	if (data->keys.kys_right)
 		data->angle_direction += ROTATION_SPEED;
+	
 	if (data->keys.kys_esc)
 		exit((free_destroy_all(data), 0));
-	if (data->turn_on && !check_outofmap(data->map, x, y, data->rows))
+	if (data->keys.kys_f1 && !data->click)
+	{
+		data->mini_map = !data->mini_map;
+		data->click = TRUE;
+	}
+	else if (!data->keys.kys_f1)
+		data->click = FALSE;
+	if (!check_wall(data->map, x, y, data->rows))
 	{
 		data->px = x;
 		data->py = y;

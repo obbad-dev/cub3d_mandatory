@@ -6,7 +6,7 @@
 /*   By: oobbad <oobbad@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 12:25:56 by oobbad            #+#    #+#             */
-/*   Updated: 2025/12/07 12:25:57 by oobbad           ###   ########.fr       */
+/*   Updated: 2025/12/08 12:05:18 by oobbad           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	main(int ac, char *av[])
 		return (1);
 	data.color_c = -1;
 	data.color_f = -1;
+	data.mini_map = FALSE;
 	check_extension_file(av[1]);
 	content = fill_content(av[1], &size);
 	init_textures(data.tex, &data);
