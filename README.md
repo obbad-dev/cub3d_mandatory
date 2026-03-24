@@ -19,5 +19,10 @@ MiniLibX raycasting project rendering a 3D maze.
 ## Example
 - Rotate/move with arrow/WASD keys inside the maze.
 
+## Technical Notes
+- Parses `.cub` for textures, colors, and map; validates walls enclosure and player start.
+- Raycasting via DDA: compute step/delta distances per ray, pick wall hit, and choose texture column.
+- Z-buffer used for sprites/door ordering if implemented; MiniLibX handles window and image buffers.
+
 ## Author
 - Oualid Obbad (@oualidobbad)
