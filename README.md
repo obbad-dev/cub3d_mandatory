@@ -1,28 +1,20 @@
-# cub3d_mandatory
+    # cub3d_mandatory
 
-## Description
-MiniLibX raycasting project rendering a 3D maze.
+    MiniLibX raycasting project rendering a 3D maze from a 2D map.
 
-## Features
-- Map parsing/validation and DDA raycasting.
-- Textured walls and player movement.
+    ## Architecture
+    - Parser: reads `.cub` file for texture paths, floor/ceiling colors, and map grid; validates enclosure and one player start.
+    - Raycasting: DDA per ray, perpendicular distance correction, texture column selection, optional sprite/z-buffer handling.
+    - Input/render: keyboard move/turn, MiniLibX window with per-frame redraws.
 
-## Technologies Used
-- C, MiniLibX, Makefile.
+    ## Build & Run
+    - Requires MiniLibX deps.
+    - `make` → builds the viewer.
+    - Run: `./cube3D maps/valid_map.cub` (binary name may vary).
 
-## Installation
-- Install MiniLibX deps, then run `make`.
+    ## Technical Notes
+    - Ensure map lines are rectangular after trimming; reject unknown characters.
+    - Normalize direction vector; step sizes derived from ray dir to avoid fisheye.
 
-## Usage
-- `./cube3D maps/valid_map.cub` to launch the viewer.
-
-## Example
-- Rotate/move with arrow/WASD keys inside the maze.
-
-## Technical Notes
-- Parses `.cub` for textures, colors, and map; validates walls enclosure and player start.
-- Raycasting via DDA: compute step/delta distances per ray, pick wall hit, and choose texture column.
-- Z-buffer used for sprites/door ordering if implemented; MiniLibX handles window and image buffers.
-
-## Author
-- Oualid Obbad (@oualidobbad)
+    ## Author
+    Oualid Obbad (@oualidobbad)
