@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cub3D - Raycasting engine documentation for 42 School project">
+    <meta property="og:title" content="Cub3D - Raycasting Engine Documentation">
+    <meta property="og:description" content="Complete documentation for the Cub3D raycasting engine project">
+    <meta property="og:type" content="website">
+    <title>Cub3D - Raycasting Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <h1>Cub3D - Raycasting Engine</h1>
+        <p class="subtitle">42 School Project - Wolfenstein 3D Inspired</p>
+        <nav><a href="#intro">Intro</a><a href="#raycasting">Raycasting</a><a href="#dda">DDA</a><a href="#rendering">Rendering</a><a href="#code">Code</a></nav>
+    </header>
+    <section id="intro" class="section">
+        <div class="container">
+            <h2>Introduction</h2>
+            <p>Cub3D is a 42 School project implementing a raycasting engine inspired by Wolfenstein 3D.</p>
+            <h3>Technologies</h3>
+            <ul><li>C Language</li><li>MiniLibX Graphics</li><li>Math Library (trigonometry)</li></ul>
+        </div>
+    </section>
+    <section id="raycasting" class="section">
+        <div class="container">
+            <h2>Raycasting Explained</h2>
+            <p>Raycasting creates 3D perspective by casting rays from the player's viewpoint and calculating wall intersections. Unlike raytracing, raycasting only checks intersections along a 2D plane, making it faster for real-time rendering.</p>
+            <h3>Field of View: 60°</h3>
+            <p>The project uses a 60° FOV for natural perspective similar to human vision.</p>
+            <h3>Fish-Eye Correction</h3>
+            <p>Perpendicular distance removes distortion: <code>dist_perpo = distance × cos(ray_angle - player_angle)</code></p>
+        </div>
+    </section>
+    <section id="dda" class="section">
+        <div class="container">
+            <h2>DDA Algorithm</h2>
+            <p>Digital Differential Analysis finds ray-wall intersections efficiently in a grid-based map.</p>
+            <h3>Key Functions</h3>
+            <ul>
+                <li><code>facing_player()</code> - Determines ray direction (up/down/left/right)</li>
+                <li><code>horizonlat_inter()</code> - Finds horizontal grid line intersections</li>
+                <li><code>vertical_inter()</code> - Finds vertical grid line intersections</li>
+                <li><code>dda_algo()</code> - Compares distances and chooses closest hit</li>
+            </ul>
+            <h3>Direction Detection</h3>
+            <pre><code>// Facing up: π < angle < 2π
+// Facing right: angle < π/2 OR angle > 3π/2</code></pre>
+            <h3>Distance Calculation</h3>
+            <pre><code>distance = sqrt((x2-x1)² + (y2-y1)²)</code></pre>
+        </div>
+    </section>
+    <section id="rendering" class="section">
+        <div class="container">
+            <h2>Wall Rendering & Projection</h2>
+            <h3>Wall Height Calculation</h3>
+            <pre><code>dist_perpo = distance × cos(ray_angle - player_angle)
+wall_height = (TILE_SIZE / dist_perpo) × dist_proj_plan
+wall_begin = (WIN_HEIGHT / 2) - (wall_height / 2)
+wall_end = (WIN_HEIGHT / 2) + (wall_height / 2)</code></pre>
+            <h3>Texture Selection</h3>
+            <ul>
+                <li>Horizontal hit + facing up → North texture (NO)</li>
+                <li>Horizontal hit + facing down → South texture (SO)</li>
+                <li>Vertical hit + facing left → West texture (WE)</li>
+                <li>Vertical hit + facing right → East texture (EA)</li>
+            </ul>
+            <h3>Texture Mapping</h3>
+            <pre><code>tex_x = hit_position % TILE_SIZE
+tex_y = (y - wall_start) × (64.0 / wall_height)</code></pre>
+        </div>
+    </section>
+    <section id="code" class="section">
+        <div class="container">
+            <h2>Key Constants</h2>
+            <ul>
+                <li><code>TILE_SIZE</code>: 64 - Grid cell size</li>
+                <li><code>WIN_WIDTH</code>: 1920 - Window width</li>
+                <li><code>WIN_HEIGHT</code>: 1080 - Window height</li>
+                <li><code>NUM_RAYS</code>: 1920 - Rays per frame</li>
+                <li><code>MOVE_SPEED</code>: 2 - Player movement speed</li>
+                <li><code>ROTATION_SPEED</code>: 0.02 - Rotation speed</li>
+            </ul>
+            <h3>Main Rendering Loop</h3>
+            <pre><code>FOV = 60° (π/3 radians)
+dist_proj_plan = (WIN_WIDTH / 2) / tan(FOV / 2)
+For each of 1920 rays:
+  - Cast ray at angle
+  - Run DDA algorithm
+  - Calculate wall height
+  - Select texture
+  - Draw vertical slice</code></pre>
+        </div>
+    </section>
+    <footer>
+        <p>Created for 42 School Cub3D Project | <a href="https://github.com/oualidobbad/cub3d_mandatory" style="color:#00d9ff">View on GitHub</a></p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
